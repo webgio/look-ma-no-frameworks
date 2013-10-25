@@ -1,6 +1,6 @@
-var ko = require('knockout')
-  , domify = require('domify')
+var domify = require('domify')
   , _ = require('underscore')
+  , Delegate = require('dom-delegate')
   , EventEmitter = require('events').EventEmitter
 
 function Dropdown(name, element, data) {
@@ -12,20 +12,28 @@ function Dropdown(name, element, data) {
 
   // GASP - we can use Knockout if we want to
   // Just keep it internal to the presenter
-  this.values = ko.observableArray(this.data)
-  this.selectedValue = ko.observable()
+  this.values = this.data
+  this.selectedValue = '' 
   this.render()
-  ko.applyBindings(this, this.element)
-  this.selectedValue.subscribe(this.onSelectedValueChanged.bind(this))
+  var el = document.getElementsByName(this.name)[0]
+  el.addEventListener("change", this.onSelectedValueChanged.bind(this), false)
 }
 
 Dropdown.prototype = {
   render: function() {
     this.element.innerHTML = ""
-    var html = '<select name="' + this.name + '" data-bind="options: values, value: selectedValue"></select>'
+    var html = '<select name="' + this.name + '">'
+    _.each(this.values, function(value){
+      var selected = this.selected === value
+      var selctedAttr = selected ? ' selected' : ''
+      html += '<option value="' + value + '" ' + selctedAttr + '>' + value + '</option>'
+    })
+    html += '</select>'
     this.element.appendChild(domify(html))
   },
-  onSelectedValueChanged: function(newValue) {
+  onSelectedValueChanged: function(event) {
+    var newValue = event.currentTarget.value
+    this.selectedValue = newValue
     this.emit('changed', newValue)
   },
   detach: function() {
