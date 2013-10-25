@@ -17,7 +17,7 @@ function run(){
   })
 
   routing.start({
-    pushState: true
+    pushState: false 
   })
 }
 
