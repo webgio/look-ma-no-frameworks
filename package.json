@@ -9,7 +9,6 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "knockout": "~2.3.0",
     "domready": "~0.2.13",
     "domify": "~1.0.0",
     "underscore": "~1.5.2",
