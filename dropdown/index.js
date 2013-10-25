@@ -15,8 +15,11 @@ function Dropdown(name, element, data) {
   this.values = this.data
   this.selectedValue = '' 
   this.render()
-  var el = document.getElementsByName(this.name)[0]
-  el.addEventListener("change", this.onSelectedValueChanged.bind(this), false)
+  //this.selectel = element.getElementsByTagName('select')[0]
+  //this.selectel.addEventListener("change", 
+  //    this.onSelectedValueChanged.bind(this), false)
+  this.delegate = new Delegate(this.element)
+  this.delegate.on('change', 'select', this.onSelectedValueChanged.bind(this))
 }
 
 Dropdown.prototype = {
@@ -24,20 +27,17 @@ Dropdown.prototype = {
     this.element.innerHTML = ""
     var html = '<select name="' + this.name + '">'
     _.each(this.values, function(value){
-      var selected = this.selected === value
-      var selctedAttr = selected ? ' selected' : ''
+      var selctedAttr = this.selected === value ? ' selected' : ''
       html += '<option value="' + value + '" ' + selctedAttr + '>' + value + '</option>'
     })
     html += '</select>'
     this.element.appendChild(domify(html))
   },
-  onSelectedValueChanged: function(event) {
-    var newValue = event.currentTarget.value
-    this.selectedValue = newValue
-    this.emit('changed', newValue)
+  onSelectedValueChanged: function(event, select) {
+    this.emit('changed',this.selectedValue = select.value)
   },
   detach: function() {
-    ko.cleanNode(this.element)
+    this.delegate.destroy()
   }
 }
 _.extend(Dropdown.prototype, EventEmitter.prototype)
