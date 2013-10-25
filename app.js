@@ -22,8 +22,12 @@ function run(){
 }
 
 function switchTo(Presenter, options) {
-  if(currentPage) currentPage.detach()
-  currentPage = new Presenter(container, options)
+  if(currentPage) {
+    this.container.removeChild(this.container.children[0])
+    currentPage.detach()
+  }  
+  currentPage = new Presenter(options)
+  this.container.appendChild(currentPage.element)
 }
 
 domready(run)

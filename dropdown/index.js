@@ -10,14 +10,9 @@ function Dropdown(name, element, data) {
   this.element = element
   this.name = name
 
-  // GASP - we can use Knockout if we want to
-  // Just keep it internal to the presenter
   this.values = this.data
   this.selectedValue = '' 
   this.render()
-  //this.selectel = element.getElementsByTagName('select')[0]
-  //this.selectel.addEventListener("change", 
-  //    this.onSelectedValueChanged.bind(this), false)
   this.delegate = new Delegate(this.element)
   this.delegate.on('change', 'select', this.onSelectedValueChanged.bind(this))
 }
