@@ -24,3 +24,15 @@
 - Obviously you'd usually render from the top level presenter to a detached fragment and then add event handlers
 - If you want two-way data binding, then you do that within a presenter with whatever library and raise domain-specific events
 - I'd probably not use Knockout myself, but it's there to prove a point.
+
+# Changes I made to Rob's code
+
+- Removed Knockout
+- Used Handlebars and hbsfy instead of Mustache and brfs
+- Used a dom fragment in presenters instead of direct manipulation of
+  document
+
+# Next steps
+
+- Using gruntjs to automate builds (build tests too)
+- Adding testing with jasmine and testem
