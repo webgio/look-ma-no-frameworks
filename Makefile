@@ -7,9 +7,9 @@ instructions:
 
 
 build:
-	browserify app.js -t brfs -o public/app.js -v
+	browserify app.js -t hbsfy -o public/app.js -v
 
 watch:
-	watchify app.js -t brfs -d -o public/app.js -v
+	watchify app.js -t hbsfy -d -o public/app.js -v
 
 

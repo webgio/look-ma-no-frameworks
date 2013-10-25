@@ -1,13 +1,12 @@
 var testdata = require('../testdata')
-  , fs = require('fs')
   , domify = require('domify')
-  , mustache = require('mustache')
+  , template = require('./view.hbs')
   , _ = require('underscore')
 
 var View = function(options) {
   options = options || {}
   this.element = options.element || domify('<div></div>')
-  this.template = fs.readFileSync(__dirname + "/view.html")
+  //this.template = template 
   this.customer = _(testdata.customers)
             .find(function(i) { return i.name == options.name})
   this.render()
@@ -18,7 +17,7 @@ View.prototype = {
 
   },
   render: function() {
-    this.element.innerHTML = mustache.render(this.template, this.customer)
+    this.element.innerHTML = template(this.customer)
   }
 }
 
