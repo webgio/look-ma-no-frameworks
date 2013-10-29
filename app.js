@@ -7,7 +7,14 @@ var domready = require('domready')
 
 function run(){
   container = document.getElementById('container')
+  if (!container) {
+    console.log('no container for the app, code available for testing')
+  } else {
+    handleRoutes()
+  }
+}
 
+function handleRoutes() {
   routing.route(/^customer\/(.+)/, function(path) {
     switchTo(CustomerView, { name: path.split('/')[1] })
   })
