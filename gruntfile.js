@@ -5,7 +5,7 @@ module.exports = function(grunt) {
           src: {
             files: {
               'public/app.js': ['app.js'],
-              'specs_bundle.js': ['specs/*Specs.js']
+              'specs/bundle.js': ['specs/*Specs.js']
             },
             options: {
               transform: ['hbsfy'],
@@ -13,16 +13,29 @@ module.exports = function(grunt) {
             }
           }
         },
+        shell: {
+            httpserver: {
+                command: 'http-server'
+            }
+        },
         watch: {
           browserify: {
             files: ["./*.js", "./*.hbs", "specs/*Specs.js"],
             tasks: ['browserify']
           }
+        },
+        concurrent: {
+            target1: ['watch','shell'],
+            options: {
+                logConcurrentOutput: true
+            }
         }
     });
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default', ['watch']);
+    grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.registerTask('default', ['concurrent:target1']);
 
     grunt.event.on('watch', function(action, filepath, target) {
       grunt.log.writeln(target + ': ' + filepath + ' has ' + action);

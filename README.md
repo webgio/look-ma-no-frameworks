@@ -34,5 +34,21 @@
 
 # Next steps
 
-- Using gruntjs to automate builds (build tests too)
-- Adding testing with jasmine and testem
+[x] Using gruntjs to automate builds (build tests too)
+[x] Adding testing with jasmine and testem
+
+# Install
+To install exec in shell:
+```bash
+npm install
+```
+
+# Launch app
+```bash
+grunt
+```
+
+# Testing
+```bash
+testem
+```
